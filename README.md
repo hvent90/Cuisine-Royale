@@ -1,6 +1,6 @@
 # Cuisine Royale
 
-> "It would be great if the player's spawned with a Grill" - Michael
+> "It would be great if the player spawned with a Grill" - Michael
 
 ## Installation
 
