@@ -5,12 +5,15 @@ _scripts = [
   execVM "Inventory.sqf",
   execVM "FoodSupply.sqf",
   execVM "WeaponSupply.sqf",
-  execVM "ServerLoops.sqf"
+  execVM "ServerLoops.sqf",
+  execVM "Reinforcements.sqf"
 ];
 
 {waitUntil {scriptDone _x;}} forEach _scripts;
 
 if (isServer) then {
+  civilian setFriend [east, 1];
+  
   [] call CreatePlayzoneBoundaries;
   [] call CreatePlayerBases;
   [] call CreatePlayerInventory;

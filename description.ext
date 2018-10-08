@@ -1,0 +1,36 @@
+class CfgSounds
+{
+  sounds[] = {};
+
+  class HusbandArrive
+  {
+    name = "husband_arrive"; // how the sound is referred to in the editor (e.g. trigger effects)
+
+    sound[] = {
+      "fx\husband_arrive.ogg",
+      1, // volume
+      1 // pitch
+    };
+
+    titles[] = {
+      1, // subtitle delay in seconds`
+      "Your food has attracted as Husband" // subtitle text
+    };
+  };
+
+  class PutInFridge
+  {
+    name = "put_in_fridge"; // how the sound is referred to in the editor (e.g. trigger effects)
+
+    sound[] = {
+      "fx\put_in_fridge.ogg",
+      1, // volume
+      1 // pitch
+    };
+
+    titles[] = {
+      1, // subtitle delay in seconds`
+      "You put food in fridge" // subtitle text
+    };
+  };
+};

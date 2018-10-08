@@ -8,8 +8,22 @@ OnPlayerKill = {
   };
 };
 
+CallReinforcementAction = {
+  params ["_unit", "_vehicle"];
+
+  [_unit, _vehicle] call CallReinforcement;
+
+  _foodAmount = _unit getVariable "foodInBase";
+  _unit setVariable ["foodInBase", _foodAmount - 15];
+
+  hint format ["Food remaining: %1", _unit getVariable "foodInBase"];
+};
+
 CreatePlayerInventory = {
+  _sides = [];
+
   {
+    _sides append [side _x];
     _player = _x;
 
     _player setVariable ["foodOnPerson", 15];
@@ -21,5 +35,25 @@ CreatePlayerInventory = {
       params ["_unit"];
       _unit call OnPlayerKill;
     }];
+
+    // Prevent player's "side" from going to ENEMY upon friendly fire
+    _player addEventHandler ["HandleRating", {
+      params["_unit"];
+
+      if (rating _unit < 0) then {
+        player addRating abs rating _unit;
+      };
+    }];
+
+    _player addAction [
+      "Call Armed Car Reinforcement",
+      "[_this select 1, 0] call CallReinforcementAction;",
+      [],
+      1.5,
+      false,
+      true,
+      "",
+      "_this getVariable 'foodInBase' > 14;"
+    ];
   } forEach allUnits;
 };

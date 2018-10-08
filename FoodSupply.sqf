@@ -3,7 +3,10 @@ OnFoodPickup = {
   deleteVehicle _crate;
 
   _message = format ["Picked up %1 food", _foodAmount];
-  _player setVariable ['foodOnPerson', _foodAmount];
+  _player setVariable [
+    'foodOnPerson',
+    (_player getVariable "foodOnPerson") + _foodAmount
+  ];
   [_player, _message] call HintPlayer;
 };
 
@@ -18,15 +21,18 @@ InitSupplyCrate = {
     _veh getPos [1, random 360]
   ];
 
-  [_crate, "Pickup Food", "call OnFoodPickup", 1.5, _foodAmount]
-    call AddLiteAction;
+  /* [_crate, "Pickup Food", "call OnFoodPickup", 1.5, _foodAmount]
+    call AddLiteAction; */
+
+  ["here1", "hint", true, true] call BIS_fnc_MP;
+  [[_crate, "Pickup Food", "call OnFoodPickup", 1.5, _foodAmount], "AddLiteAction", true, true] call BIS_fnc_MP;
 };
 
 InitFoodSupply = {
   _helipads = [
-    helipad_1,
-    helipad_2,
-    helipad_3
+    /* helipad_1, */
+    helipad_2
+    /* helipad_3 */
   ];
 
   _helipad = selectRandom _helipads;
@@ -41,9 +47,9 @@ InitFoodSupply = {
   _group = group ((crew _veh) select 0);
   [_group, position _helipad, _helipad] call BIS_fnc_wpLand;
 
-  waitUntil {[_veh] call VehicleReady};
   sleep 3;
-
+  waitUntil {[_veh] call VehicleReady};
+  sleep 2;
   _foodAmount = 15;
   [_veh, _foodAmount] call InitSupplyCrate;
   sleep 5;
